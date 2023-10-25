@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MedSwap</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url({{ url_for('static', filename='pagebgfinal.png') }});
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background-color: rgba(182, 209, 244, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 20px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .camera-container {
+            text-align: center;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .camera-view {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+            background-image: url({{url_for ( 'static', filename='cameratutorialfinal.jpg') }});
+            background-attachment:relative;
+            box-shadow: 0 20px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn {
+            margin: 5px;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <a class="btn btn-info home-button" href="front.html">Home</a>
+    <div class="container mt-5">
+        <div class="header">
+            <h1>Welcome to <span style="color: #007bff;">MedSwap</span></h1>
+            <p><i>Find the medicines you need</i></p>
+        </div>
+
+        <div class="input-group mb-3">
+            <form action="/submit" method="post">
+                <input type="text" class="form-control" placeholder="Search for medicines..." id="searchBar" name="input_string" required>
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit" id="searchButton">Search</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="camera-container">
+            <h3>Take a Photo</h3>
+            <video id="cameraView" class="camera-view" autoplay muted playsinline></video>
+            <div class="button-container">
+                <button class="btn btn-success" id="cameraButton">Take Photo</button>
+                <button class="btn btn-primary" id="captureButton" disabled>Capture</button>
+                <button class="btn btn-danger" id="closeButton" disabled>Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const cameraButton = document.getElementById("cameraButton");
+            const captureButton = document.getElementById("captureButton");
+            const cameraView = document.getElementById("cameraView");
+            const closeButton = document.getElementById("closeButton");
+            const constraints = {
+                video: true,
+            };
+
+            let mediaStream = null;
+
+            cameraButton.addEventListener("click", function () {
+                // Access the camera and display the live feed
+                navigator.mediaDevices.getUserMedia(constraints)
+                    .then(function (stream) {
+                        mediaStream = stream;
+                        cameraView.srcObject = stream;
+                        captureButton.disabled = false; // Enable the "Capture" button
+                        closeButton.disabled = false; // Enable the "Close" button
+                    })
+                    .catch(function (error) {
+                        console.error("Error accessing the camera: " + error);
+                    });
+            });
+
+            captureButton.addEventListener("click", function () {
+                if (mediaStream) {
+                    // Capture a frame from the camera and display it on a canvas
+                    const canvas = document.createElement('canvas');
+                    canvas.width = cameraView.videoWidth;
+                    canvas.height = cameraView.videoHeight;
+                    const context = canvas.getContext('2d');
+                    context.drawImage(cameraView, 0, 0, canvas.width, canvas.height);
+
+                    // Convert the canvas image to a data URL
+                    const dataURL = canvas.toDataURL('image/jpeg');
+
+                    // Create a download link to save the image
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = dataURL;
+                    downloadLink.download = 'captured_image.jpg';
+                    downloadLink.click();
+                }
+            });
+
+            closeButton.addEventListener("click", function () {
+                // Stop the camera stream
+                if (mediaStream) {
+                    mediaStream.getTracks().forEach(track => track.stop());
+                    mediaStream = null;
+                    cameraView.srcObject = null;
+                    captureButton.disabled = true; // Disable the "Capture" button
+                    cameraButton.disabled = false; // Enable the "Take Photo" button
+                    closeButton.disabled = true; // Disable the "Close" button
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

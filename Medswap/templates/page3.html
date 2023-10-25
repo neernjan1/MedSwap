@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Awareness</title>
+    <link rel="stylesheet" type="text/css" href="navbutton.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('{{ url_for('static', filename='page3bg.png') }}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        #heading {
+            font-size: 36px;
+            animation: slide-in  5s forwards;
+            color: #007bff; /* Set the color you want for the animated text */
+            url('{{ url_for('static', filename='arunsir.jpeg') }}');
+
+        }
+
+        #slideshow-container {
+            position: relative;
+            max-width: 800px;
+            width: 80%; /* Make it responsive */
+            overflow: hidden;
+            border: 5px solid #333; /* Add a border to create a 2D look */
+            border-radius: 15px; /* Round the corners */
+            margin: 0 auto; /* Center the container */
+        }
+
+        .slide {
+            position: relative;
+            display: none;
+            width: 100%;
+            perspective: 1000px; /* Add perspective for 3D effect */
+            transition: transform 1s; /* Apply transition to the transform property */
+        }
+
+        .slide img {
+            width: 100%;
+            height: auto;
+        }
+
+        .slide.front {
+            transform: rotateY(0deg); /* Rotate the front slide to 0 degrees */
+        }
+
+        .slide.back {
+            transform: rotateY(180deg); /* Rotate the back slide to 180 degrees (flipped) */
+        }
+
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 24px; /* Increase font size for arrow icons */
+        }
+
+        .next {
+            right: 0;
+        }
+
+        .prev {
+            left: 0;
+        }
+
+        .home-button {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 10px;
+            color: rgb(8, 1, 1);
+            border: none;
+            cursor: pointer;
+            font-size: 18px; /* Adjust the font size for the home button */
+        }
+
+        .prev:hover, .next:hover, .home-button:hover {
+            background-color: #555;
+        }
+
+        @keyframes slide-in {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a class="home-button" href="front.html">Home</a>
+    <h1 id="heading"><img src="{{ url_for('static', filename='arunsir.jpg') }}" alt="Image 1"></h1>
+    <div id="slideshow-container">
+        <div class="slide front">
+            <img src="{{ url_for('static', filename='image1.png') }}" alt="Image 1">
+        </div>
+        <div class="slide">
+            <img src="{{ url_for('static', filename='image2.gif') }}" alt="Image 2">
+        </div>
+        <div class="slide">
+            <img src="{{ url_for('static', filename='image3.gif') }}" alt="Image 3">
+        </div>
+        <div class="slide back">
+            <img src="{{ url_for('static', filename='image5.png') }}" alt="Image 5">
+        </div>
+    </div>
+    <button class="prev" onclick="changeSlide(-1)">&#9664;</button>
+    <button class="next" onclick="changeSlide(1)">&#9654;</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        showSlide(currentSlide);
+
+        function changeSlide(step) {
+            currentSlide += step;
+            if (currentSlide < 0) {
+                currentSlide = 2;
+            } else if (currentSlide > 2) {
+                currentSlide = 0;
+            }
+            showSlide(currentSlide);
+        }
+
+        function showSlide(slideIndex) {
+            const slides = document.getElementsByClassName("slide");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("front", "back");
+                slides[i].style.display = "none";
+            }
+
+            slides[slideIndex].style.display = "block";
+            slides[slideIndex].classList.add("front");
+
+            const nextIndex = (slideIndex + 1) % 3;
+            slides[nextIndex].classList.add("back");
+        }
+    </script>
+</body>
+</html>

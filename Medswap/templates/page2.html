@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>OCM</title>
+    <link rel="stylesheet" type="text/css" href="navbutton.css">
+    <style>
+        body {
+            background-image: url({{ url_for('static', filename='page2bgfinal.png') }});
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .nav-bar {
+            background-color: #8e8e8e;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .nav-button {
+            text-decoration: none;
+            color: white;
+            margin: 0 10px;
+        }
+
+        .sidebar {
+            width: 250px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #eee;
+            padding: 20px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        /* Dropdown styles */
+        .dropdown {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .dropdown-title {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #555;
+            color: white;
+            border: 1px solid #444;
+            border-radius: 5px;
+            text-align: center;
+            margin: 0;
+        }
+
+        .dropdown-title:hover {
+            background-color: #444;
+        }
+
+        .options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .options.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .option {
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: background-color 0.3s, color 0.3s;
+            text-align: center;
+        }
+
+        .option:hover {
+            background-color: #ccc;
+            color: black;
+        }
+
+        .option a {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav-bar">
+        <a class="home-button" href="front.html">Home</a>
+        <a class="nav-button" href="page1.html">&#9664; Previous</a>
+        <a class="nav-button" href="page3.html">Next &#9654;</a>
+    </div>
+
+    <div class="sidebar">
+        <!-- Dropdown 1 -->
+        <div class="dropdown" style="top: 0;">
+            <div class="dropdown-title" onclick="toggleOptions('options1')">Pain Reliever</div>
+            <div class="options" id="options1">
+                <div class="option" title="Description for Option 1">
+                    <a href="https://pharmeasy.in/online-medicine-order/paracin-500mg-tab-15-s-torque--165262">Paracetamol</a>
+                </div>
+                <div class="option" title="Description for Option 2">
+                    <a href="https://pharmeasy.in/online-medicine-order/afenak-100mg-tablet-111699">Aceclofenac</a>
+                </div>
+                <div class="option" title="Description for Option 3">
+                    <a href="https://pharmeasy.in/online-medicine-order/44952">Aspirin Tablets</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dropdown 2 -->
+        <div class="dropdown" style="top: 0;">
+            <div class="dropdown-title" onclick="toggleOptions('options2')">Cough/Cold</div>
+            <div class="options" id="options2">
+                <div class="option" title="Description for Option 1">
+                    <a href="https://pharmeasy.in/online-medicine-order/benadryl-cough-formula-bottle-of-150ml-syrup-37060">Benedryl</a>
+                </div>
+                <div class="option" title="Description for Option 2">
+                    <a href="https://pharmeasy.in/online-medicine-order/teplota-100mg-bottle-of-15ml-syrup-3631551">Acetaminophen</a>
+                </div>
+                <div class="option" title="Description for Option 3">
+                    <a href="https://pharmeasy.in/online-medicine-order/cofryl-cough-syrup-100ml-41586">Diphenhydramine</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dropdown 3 -->
+        <div class="dropdown" style="top: 0;">
+            <div class="dropdown-title" onclick="toggleOptions('options3')">Skin Infection</div>
+            <div class="options" id="options3">
+                <div class="option" title="Description for Option 1">
+                    <a href="https://pharmeasy.in/online-medicine-order/belsonate-cream-20gm-213448">Benzoate</a>
+                </div>
+                <div class="option" title="Description for Option 2">
+                    <a href="https://pharmeasy.in/online-medicine-order/albetrue-400mg-strip-of-1-tablet-3625114">Albendazole Tablets</a>
+                </div>
+                <div class="option" title="Description for Option 3">
+                    <a href="https://pharmeasy.in/online-medicine-order/flagyl-200mg-tablet-47293">Metronidazole Tablets</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var openDropdown = null;
+
+        function toggleOptions(optionsId) {
+            var options = document.getElementById(optionsId);
+
+            if (openDropdown && openDropdown !== options) {
+                openDropdown.classList.remove("active");
+            }
+
+            if (options.classList.contains("active")) {
+                options.classList.remove("active");
+                openDropdown = null;
+            } else {
+                options.classList.add("active");
+                openDropdown = options;
+            }
+        }
+    </script>
+</body>
+
+</html>

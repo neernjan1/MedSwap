@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Homepage</title>
+    <link rel="stylesheet" type="text/css" href="navbutton.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='homepage.png') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        #shiftedDiv {
+            position: fixed; /* Position the div relative to the viewport */
+            top: 340px; /* 10 pixels from the top edge of the viewport */
+            left: 30px;
+        }
+
+        #button1 {
+            background-color: rgb(214, 160, 160);
+            text-decoration-color: black;
+        }
+
+        #button2 {
+            color: rgb(209, 246, 115);
+        }
+
+        #button3 {
+            background-color: rgb(247, 197, 73);
+        }
+
+        #button4 {
+            background-color: rgb(106, 78, 123);
+        }
+
+        #button5 {
+            background-color: rgb(35, 87, 58);
+        }
+
+        .scrolling-text {
+            white-space: nowrap;
+            overflow: hidden;
+            position: fixed; /* Fix the position to the bottom */
+            bottom: 0;
+            width: 100%; /* Make it span the full width */
+            animation: scroll 30s linear infinite; /* Adjust animation duration for slower scrolling */
+            color: black;
+        }
+
+        .nav-bar {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(100%);
+                font-weight: normal; /* Reset font weight to normal at the start */
+            }
+            10% {
+                font-weight: bold; /* Set the font to bold after 10% of animation */
+            }
+            90% {
+                font-weight: bold; /* Keep the font bold until near the end */
+            }
+            100% {
+                transform: translateX(-100%);
+                font-weight: normal; /* Reset font weight to normal at the end */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav-bar">
+        <a class="home-button" href="front.html">Home</a>
+    </div>
+
+    <div class="container text-center mt-5" id="shiftedDiv">
+        <div class="col">
+            <div class="col-md-4">
+                <a href="page1.html" action="/search" class="btn btn-danger btn-lg btn-block " id="button1">Search Medicine</a>
+            </div>
+            <br />
+            <div class="col-md-4">
+                <a href="page2.html" class="btn btn-success btn-lg btn-block " id="button2">General Medicines</a>
+            </div>
+            <br />
+            <div class="col-md-4">
+                <a href="location.html" class="btn btn-info btn-lg btn-block " id="button4">Locate store</a>
+            </div>
+            <br />
+            <div class="col-md-4">
+                <a href="page3.html" class="btn btn-info btn-lg btn-block " id="button3">More About Us</a>
+            </div>
+            <br />
+            <div class="col-md-4">
+                <a href="team.html" class="btn btn-info btn-lg btn-block " id="button5">INOVISIONARIES</a>
+            </div>
+        </div>
+    </div>
+    <div class="scrolling-text"> Created and Managed by team INOVISIONARIES </div>
+
+    <!-- Include Bootstrap JS (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

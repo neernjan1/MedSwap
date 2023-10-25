@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Intro Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgb(72, 79, 68);
+        }
+
+        .members-container {
+            text-align: center;
+        }
+
+      
+
+        .members {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .member {
+            text-align: center;
+            margin: 10px;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .active-member {
+            display: block;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        img {
+            max-width: 50%;
+            height: auto;
+            border-radius: 50%;
+            transition: transform 0.5s;
+        }
+
+        img:hover {
+            transform: scale(1.2);
+        }
+
+        h2 {
+            font-size: 18px;
+            color: #fff;
+        }
+
+        p {
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .slideshow-arrows {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .slideshow-arrows button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .slideshow-arrows button:hover {
+            transform: scale(1.2);
+        }
+        h1{
+            text-shadow: #686666;
+        }
+    </style>
+</head>
+<body>
+    <h1><span style="color: #ffffff;">INOVISIONARIES</span></h1>
+    <div class="members-container">
+        <div class="members">
+            <div class="member active-member">
+                <img src="{{ url_for('static', filename='neeraj.jpeg') }}" alt="Neeraj Yadav">
+                <h2>Neeraj Yadav</h2>
+                <p>Front-End Developer</p>
+            </div>
+
+            <div class="member">
+                <img src="{{ url_for('static', filename='vyomika.jpeg') }}" alt="Vyomika">
+                <h2>Vyomika</h2>
+                <p>Designer</p>
+            </div>
+
+            <div class="member">
+                <img src="{{ url_for('static', filename='bhavya.jpeg') }}" alt="Bhavya Goyal">
+                <h2>Bhavya Goyal</h2>
+                <p>Algorithm Developer</p>
+            </div>
+
+            <div class="member">
+                <img src="{{ url_for('static', filename='sub.jpeg') }}" alt="Davinder Sandhu">
+                <h2>Davinder Sandhu</h2>
+                <p>Back-End Developer</p>
+            </div>
+
+            <div class="member">
+                <img src="{{ url_for('static', filename='kevin.jpeg') }}" alt="Kevin S Daniel">
+                <h2>Kevin S Daniel</h2>
+                <p>Data Filtering</p>
+            </div>
+
+            <div class="member">
+                <img src="{{ url_for('static', filename='karan.jpeg') }}" alt="Karan Cheeran">
+                <h2>Karan Cheeran</h2>
+                <p>Data Filtering</p>
+            </div>
+        </div>
+
+        <div class="slideshow-arrows">
+            <button id="prevSlide">&lt;</button>
+            <button id="nextSlide">&gt;</button>
+        </div>
+    </div>
+
+    <script>
+        let currentMember = 0;
+        const members = document.querySelectorAll('.member');
+        const prevSlide = document.getElementById('prevSlide');
+        const nextSlide = document.getElementById('nextSlide');
+
+        function showSlide(index) {
+            members[currentMember].classList.remove('active-member');
+            currentMember = index;
+            members[currentMember].classList.add('active-member');
+        }
+
+        prevSlide.addEventListener('click', () => {
+            showSlide((currentMember - 1 + members.length) % members.length);
+        });
+
+        nextSlide.addEventListener('click', () => {
+            showSlide((currentMember + 1) % members.length);
+        });
+
+        // Initially, show the first member
+        members[currentMember].classList.add('active-member');
+    </script>
+</body>
+</html>

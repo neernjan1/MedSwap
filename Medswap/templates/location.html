@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Store locator</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        #header {
+            background-color: #444;
+            color: white;
+            padding: 10px;
+        }
+
+        #search-bar {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 20px;
+        }
+
+        #search-button {
+            padding: 10px 20px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #home-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #444;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        /* Frame styles */
+        .image-frame {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid #ccc;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            z-index: 1;
+        }
+
+        .image-frame img {
+            max-width: 100%;
+            max-height: 70vh;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .image-frame .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .image-frame #zoom-slider {
+            width: 80%;
+            display: block;
+            margin: 0 auto;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <a id="home-button" href="front.html">Home</a>
+    <div id="header">
+        <h1>Jan Aushadhi Store Locator</h1>
+    </div>
+
+    <input type="text" id="search-bar" placeholder="Enter City">
+    <button id="search-button" onclick="fetchImage()">Search</button>
+
+    <div id="image-container"></div>
+
+    <!-- Image Frame -->
+    <div class="image-frame" id="image-frame">
+        <img id="displayed-image">
+        <span class="close-button" onclick="closeImage()">X</span>
+        <input type="range" id="zoom-slider" min="50" max="200" value="100" oninput="zoomImage(this.value)" style="width: 80%; display: block; margin: 0 auto; margin-top: 10px;">
+    </div>
+
+    <script>
+        var imageFrame = document.getElementById('image-frame');
+        var displayedImage = document.getElementById('displayed-image');
+
+        function fetchImage() {
+            var imageName = document.getElementById('search-bar').value;
+            // Use url_for to generate the image URL based on the image's path in the static folder
+            displayedImage.src = "{{ url_for('static', filename='maps/') }}" + imageName + '.png';
+
+            // Display the image frame
+            imageFrame.style.display = 'block';
+        }
+
+        function closeImage() {
+            // Hide the image frame
+            imageFrame.style.display = 'none';
+        }
+
+        function zoomImage(value) {
+            var scaleFactor = value / 100; // Convert the value to a scale factor (e.g., 0.5 for 50% zoom)
+            displayedImage.style.transform = 'scale(' + scaleFactor + ')';
+        }
+    </script>
+</body>
+</html>
